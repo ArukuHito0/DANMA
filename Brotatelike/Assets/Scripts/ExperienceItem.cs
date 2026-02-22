@@ -1,15 +1,38 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ExperienceItem : PooledObject, IPickable
+public class ExperienceItem : PickableItem
 {
-    [SerializeField]
-    private int experiencePoint;
+    [SerializeField] private int experiencePoint;
 
-    public void PickUp(ExpComponent expComponent)
+    [SerializeField] private float animTime;
+
+    public override void PickUp(PlayerController player)
     {
-        expComponent.AddExp(experiencePoint);
+        base.PickUp(player);
 
+        if(gameObject.activeSelf)
+            StartCoroutine(PickupAnim(player));
+    }
+
+    IEnumerator PickupAnim(PlayerController player)
+    {
+        float time = 0f;
+        Vector3 startPos = transform.position;
+
+        while (time < animTime)
+        {
+            time += Time.deltaTime;
+            float t = time / animTime;
+            t *= t;
+
+            transform.position = Vector3.Lerp(startPos, player.transform.position, t);
+
+            yield return null;
+        }
+
+        player.ExpComponent.AddExp(experiencePoint);
         Release();
     }
 }

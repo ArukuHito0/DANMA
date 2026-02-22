@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb35cbfe7e78ab3499352426f0766a5a, type: 3}
-  m_Name: MaxHealthUpgrade
-  m_EditorClassIdentifier: Assembly-CSharp::MaxHealthUpgrade
-  rank: 3
-  upgradeName: "\u751F\u547D\u529B\u5F37\u5316"
-  addMaxHealth: 100
+  m_Script: {fileID: 11500000, guid: 7ca226f5395e84f4b8847cc271d23285, type: 3}
+  m_Name: MoveSpeedUpgrade
+  m_EditorClassIdentifier: Assembly-CSharp::MoveSpeedUpgrade
+  rank: 0
+  upgradeName: "\u79FB\u52D5\u901F\u5EA6\u5F37\u5316"
+  addSpeed: 3

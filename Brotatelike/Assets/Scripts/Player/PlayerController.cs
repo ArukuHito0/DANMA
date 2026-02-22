@@ -10,7 +10,6 @@ using UnityEngine.Video;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
     private ObjectPool bulletPool;
 
     private HealthComponent healthComponent;
@@ -30,6 +29,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float fireRate;
 
+    [SerializeField] private float collectRange;
+
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform fieldSize;
     [SerializeField] private LayerMask targetLayer;
@@ -48,8 +49,8 @@ public class PlayerController : MonoBehaviour
         Application.targetFrameRate = 60;
 
         EnemyBase.target = this;
+        BulletController.player = this;
 
-        rb = GetComponent<Rigidbody2D>();
         bulletPool = GameObject.Find("BulletPool").GetComponent<ObjectPool>();
         
         healthComponent = GetComponent<HealthComponent>();
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Shooter());
+        StartCoroutine(CollectItem());
     }
 
     private void Update()
@@ -85,7 +87,7 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            var target = GetTarget.GetTargetInRange(transform.position, range);
+            EnemyBase target = GetTarget.GetTargetInRange(EnemyBase.enemyList, transform.position, range);
 
             if (target != null)
             {
@@ -98,6 +100,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private IEnumerator CollectItem()
+    {
+        while (true)
+        {
+            GetTarget.GetTargetInRange(PickableItem.itemList, transform.position, collectRange)?.PickUp(this);
+
+            yield return null;
+        }
+    }
+
     public void AddPower(int amount)
     {
         power += amount;
@@ -106,11 +118,5 @@ public class PlayerController : MonoBehaviour
     public void AddMoveSpeed(float amount)
     {
         moveSpeed += float.Parse((defaultMoveSpeed * (amount / 100)).ToString("F1"));
-    }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        IPickable pick = collision.GetComponent<IPickable>();
-        pick?.PickUp(expComponent);
     }
 }

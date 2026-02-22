@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletController : PooledObject
 {
-    private PlayerController player;
+    public static PlayerController player;
     
     private float damage;
     private float moveSpeed;
@@ -17,16 +17,18 @@ public class BulletController : PooledObject
         targetDirection = dir;
         moveSpeed = spd;
         damage = dmg;
+
+        Invoke(nameof(Release), player.Range / moveSpeed);
     }
 
-    private void OnEnable()
+    private void OnDisable()
     {
-        StartCoroutine(ReleaseTimer());
+        CancelInvoke(nameof(Release));
     }
 
     private void Awake()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,12 +52,5 @@ public class BulletController : PooledObject
 
             Release();
         }
-    }
-
-    IEnumerator ReleaseTimer()
-    {
-        yield return new WaitForSeconds(player.Range / moveSpeed);
-
-        Release();
     }
 }

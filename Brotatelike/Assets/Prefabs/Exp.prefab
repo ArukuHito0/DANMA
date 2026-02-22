@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3363594718418033436}
   - component: {fileID: -1098785026622486619}
   - component: {fileID: 6209956345608123886}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Exp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExperienceItem
   experiencePoint: 10
+  animTime: 0.3
 --- !u!58 &6209956345608123886
 CircleCollider2D:
   m_ObjectHideFlags: 0

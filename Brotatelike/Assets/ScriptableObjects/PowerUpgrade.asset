@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c1ccdfc7cf39d4ab652d0e25b8366e, type: 3}
   m_Name: PowerUpgrade
   m_EditorClassIdentifier: Assembly-CSharp::PowerUpgrade
-  rank: 2
+  rank: 0
   upgradeName: "\u653B\u6483\u529B\u5F37\u5316"
-  addPower: 20
+  addPower: 1

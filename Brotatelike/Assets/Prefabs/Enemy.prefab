@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4363478338846001066}
   - component: {fileID: 6805549266595911036}
   - component: {fileID: 2760055770130457817}
-  - component: {fileID: 7567114285833755514}
   - component: {fileID: 103842529681950686}
   - component: {fileID: 3133273605248624791}
   m_Layer: 7
@@ -125,7 +124,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -141,33 +140,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &7567114285833755514
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8138934300958562125}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &103842529681950686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,5 +166,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d56fe044070684da2ccf6e96fc58c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  currentHealth: 0
-  maxHealth: 3
+  maxHealth: 20
+  defence: 10

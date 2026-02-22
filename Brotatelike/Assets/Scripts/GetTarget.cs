@@ -1,25 +1,26 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public static class GetTarget
 {
-    public static EnemyBase GetTargetInRange(Vector3 ownerPos, float range)
+    public static T GetTargetInRange<T>(List<T> targetList, Vector3 ownerPos, float range) where T : MonoBehaviour
     {
-        EnemyBase _enemy = null;
+        T _target = null;
         float minDistance = range * range;
 
-        if (EnemyBase.enemyList.Count <= 0) return null;
+        if (targetList.Count <= 0) return null;
 
-        foreach (EnemyBase enemy in EnemyBase.enemyList)
+        foreach (T target in targetList)
         {
-            float sqrDist = (ownerPos - enemy.transform.position).sqrMagnitude;
+            float sqrDist = (ownerPos - target.transform.position).sqrMagnitude;
 
             if (sqrDist <= minDistance)
             {
                 minDistance = sqrDist;
-                _enemy = enemy;
+                _target = target;
             }
         }
 
-        return _enemy;
+        return _target;
     }
 }

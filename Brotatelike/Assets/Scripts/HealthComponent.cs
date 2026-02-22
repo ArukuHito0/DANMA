@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class HealthComponent : MonoBehaviour, IDamageable
 {
-    private int currentHealth;
-    public int CurrentHealth => currentHealth;
-    [SerializeField] private int maxHealth;
-    public int MaxHealth => maxHealth;
+    private float currentHealth;
+    public float CurrentHealth => currentHealth;
+    [SerializeField] private float maxHealth;
+    public float MaxHealth => maxHealth;
 
     public float healthRate
     {
@@ -16,6 +16,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
             return (float)currentHealth / maxHealth;
         }
     }
+    [SerializeField] private float defence;
 
     public bool IsDead => currentHealth <= 0;
 
@@ -36,7 +37,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= (int)damage;
+        currentHealth -= (int)((damage * (1 - (defence / 100))));
 
         if (IsDead)
         {
@@ -48,7 +49,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
 
     public void Heal(float amount)
     {
-        currentHealth = Mathf.Clamp(currentHealth + (int)amount, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
 
         OnHealthChanged?.Invoke(healthRate);
     }
@@ -59,7 +60,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
         OnDead?.Invoke();
     }
 
-    public void AddMaxHealth(int amount)
+    public void AddMaxHealth(float amount)
     {
         maxHealth += amount;
         currentHealth += amount;
@@ -67,7 +68,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
         OnHealthChanged?.Invoke(healthRate);
     }
 
-    public void RemoveMaxHealth(int amount)
+    public void RemoveMaxHealth(float amount)
     {
         maxHealth -= amount;
         currentHealth -= amount;

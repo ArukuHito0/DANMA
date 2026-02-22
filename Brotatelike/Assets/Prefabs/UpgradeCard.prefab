@@ -668,7 +668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeCard
   upgrade: {fileID: 11400000, guid: efc209b1b148f8e459a552de57e5acb1, type: 2}
   scaleUpValue: 1.1
-  animationTime: 0.3
+  animationTime: 0.2
   upgradeFrame: {fileID: 4049930379870529753}
   upgradeName: {fileID: 2685890774277974528}
   upgradeEffect: {fileID: 7440674280693889788}
