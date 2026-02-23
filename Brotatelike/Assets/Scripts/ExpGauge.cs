@@ -24,6 +24,6 @@ public class ExpGauge : GaugeUIBar
 
     private void UpdateLevelText()
     {
-        currentLevelText.text = $"Lv.<size=40>{expComponent.CurrentLevel}";
+        currentLevelText.text = $"Lv.<size=50>{expComponent.CurrentLevel}";
     }
 }

@@ -14,11 +14,11 @@ public class MoveSpeedUpgrade : UpgradeBaseData
 
     public override string GetEffectName()
     {
-        return "ˆÚ“®‘¬“x";
+        return "ˆÚ“®‘¬“x(%)";
     }
 
     public override string GetEffectValue()
     {
-        return ValueToStringPercent(addSpeed);
+        return ValueToString(addSpeed);
     }
 }

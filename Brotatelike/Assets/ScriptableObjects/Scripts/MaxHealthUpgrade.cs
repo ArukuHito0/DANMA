@@ -13,7 +13,7 @@ public class MaxHealthUpgrade : UpgradeBaseData
 
     public override string GetEffectName()
     {
-        return "HP‚ÌÅ‘å’l";
+        return "Å‘åHP";
     }
 
     public override string GetEffectValue()

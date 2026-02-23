@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: MaxHealthUpgrade
   m_EditorClassIdentifier: Assembly-CSharp::MaxHealthUpgrade
   rank: 0
+  upgradeIcon: {fileID: 21300000, guid: 907b479847733014ab085dde25847da4, type: 3}
   upgradeName: "\u751F\u547D\u529B\u5F37\u5316"
   addMaxHealth: 5

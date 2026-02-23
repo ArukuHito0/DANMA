@@ -14,6 +14,7 @@ public enum UpgradeRank
 public abstract class UpgradeBaseData : ScriptableObject, IUpgrade
 {
     public UpgradeRank rank;
+    public Sprite upgradeIcon;
     public string upgradeName;
 
     public virtual void Upgrade(PlayerController player) { }
