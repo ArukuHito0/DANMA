@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class ExpGauge : GaugeUIBar
 {
-
     [SerializeField] private ExpComponent expComponent;
     [SerializeField] private TextMeshProUGUI expProgressText;
     [SerializeField] private TextMeshProUGUI currentLevelText;
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         expComponent.OnExpChanged -= UpdateFillAmount;
         expComponent.OnLevelChanged -= UpdateLevelText;

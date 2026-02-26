@@ -5,7 +5,7 @@ public abstract class PickableItem : PooledObject, IPickable
 {
     public static List<PickableItem> itemList = new List<PickableItem>();
 
-    public virtual void OnEnable()
+    protected override void OnSpawn()
     {
         itemList.Add(this);
     }

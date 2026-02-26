@@ -33,6 +33,7 @@ public class ExperienceItem : PickableItem
         }
 
         player.ExpComponent.AddExp(experiencePoint);
+
         Release();
     }
 }

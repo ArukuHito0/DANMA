@@ -42,6 +42,8 @@ public class HealthComponent : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if(IsDead) return;
+
         var resultDamage = damage;
         currentHealth -= resultDamage;
 

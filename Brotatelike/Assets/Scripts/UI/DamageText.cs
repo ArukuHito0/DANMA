@@ -11,7 +11,7 @@ public class DamageText : PooledObject
 
     private Color defaultColor;
 
-    private void OnEnable()
+    protected override void OnSpawn()
     {
         damageText.color = defaultColor;
     }

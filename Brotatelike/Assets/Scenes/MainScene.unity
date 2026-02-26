@@ -5646,7 +5646,7 @@ MonoBehaviour:
   enemyStatusData: {fileID: 11400000, guid: 357e50e7448cef34895444fd986cc7a8, type: 2}
   enemyPrefab: {fileID: 8138934300958562125, guid: 894b54b05c534004d9d99c295fbf5782, type: 3}
   fieldSize: {fileID: 1818769556}
-  spawnInterbal: 1
+  spawnInterbal: 2
   margin: 2
 --- !u!4 &2103475081
 Transform:

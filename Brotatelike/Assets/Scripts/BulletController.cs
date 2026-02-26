@@ -17,7 +17,7 @@ public class BulletController : PooledObject
         damage = dmg;
     }
 
-    private void OnEnable()
+    protected override void OnSpawn()
     {
         Invoke(nameof(Release), 2f);
     }

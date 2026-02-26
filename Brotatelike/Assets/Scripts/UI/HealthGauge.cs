@@ -9,16 +9,20 @@ public class HealthGauge : GaugeUIBar
     [SerializeField]
     private TextMeshProUGUI healthText;
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        healthComponent.OnHealthChanged -= UpdateFillAmount;
-        PlayerRuntimeStatus.Instance.OnMaxHealthUpdate -= UpdateFillAmount;
+        if(healthComponent != null)
+            healthComponent.OnHealthChanged += UpdateFillAmount;
+        if(PlayerRuntimeStatus.Instance != null)
+            PlayerRuntimeStatus.Instance.OnMaxHealthUpdate += UpdateFillAmount;
     }
 
     private void Awake()
     {
-        healthComponent.OnHealthChanged += UpdateFillAmount;
-        PlayerRuntimeStatus.Instance.OnMaxHealthUpdate += UpdateFillAmount;
+        if (healthComponent != null)
+            healthComponent.OnHealthChanged += UpdateFillAmount;
+        if (PlayerRuntimeStatus.Instance != null)
+            PlayerRuntimeStatus.Instance.OnMaxHealthUpdate += UpdateFillAmount;
     }
 
     public override void UpdateFillAmount(float rate)

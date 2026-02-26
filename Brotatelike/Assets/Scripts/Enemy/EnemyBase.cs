@@ -18,7 +18,7 @@ public abstract class EnemyBase : PooledObject
 
     private Coroutine attackCoroutine;
 
-    private void OnEnable()
+    protected override void OnSpawn()
     {
         enemyList.Add(this);
 
@@ -54,6 +54,7 @@ public abstract class EnemyBase : PooledObject
         expPool = GameObject.Find("ExpPool").GetComponent<ObjectPool>();
 
         healthComponent = GetComponent<HealthComponent>();
+
         healthComponent.OnDead += Release;
         healthComponent.OnDead += () => expPool.GetPooledObject().transform.position = transform.position;
     }

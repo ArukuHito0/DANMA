@@ -69,7 +69,7 @@ public class PlayerRuntimeStatus : CharacterRuntimeStatusBase
         bonusMaxHealth.Increase(amount);
         GetComponent<HealthComponent>().Heal(amount);
 
-        OnMaxHealthUpdate?.Invoke(MaxHealth);
+        OnMaxHealthUpdate?.Invoke(GetComponent<HealthComponent>().healthRate);
     }
 
     public void AddStrength(int amount)
