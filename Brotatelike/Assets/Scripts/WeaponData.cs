@@ -15,8 +15,8 @@ public class WeaponData : ScriptableObject
     public int bulletCnt;
     public float bulletSpeed;
     public Vector2 fireDirection;
-    [Range(0, 360)] public int spreadAnbgle;
+    [Range(0, 360)] public int spreadAngle;
     [Range(0f, 1f)] public float accuray;
-    public float fireRate;
+    public float cycleTime;
     public bool isTargetting;
 }
