@@ -7,7 +7,7 @@ public class ExpComponent : MonoBehaviour
     private int currentLevel = 1;
     public int CurrentLevel => currentLevel;
     public int exp { get; private set; } = 0;
-    public int levelUpExp { get; private set; } = 100;
+    public int levelUpExp { get; private set; } = 10;
     public float expRate
     {
         get
@@ -34,6 +34,7 @@ public class ExpComponent : MonoBehaviour
             var e = exp - levelUpExp;
             exp = e <= 0 ? 0 : e;
             LevelUp();
+            levelUpExp = CurrentLevel * 10 + (int)((CurrentLevel * 0.07f * levelUpExp) * 0.2f);
 
             if (exp != 0)
             {
