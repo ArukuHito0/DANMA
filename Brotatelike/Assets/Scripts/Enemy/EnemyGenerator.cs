@@ -26,12 +26,16 @@ public class EnemyGenerator : MonoBehaviour
 
     private void OnEnable()
     {
-        FindObjectOfType<ShopManager>().OnEndShopping += StartWave;
+        ShopManager sm = FindObjectOfType<ShopManager>();
+        if(sm != null)
+            sm.OnEndShopping += StartWave;
     }
 
     private void OnDisable()
     {
-        FindObjectOfType<ShopManager>().OnEndShopping -= StartWave;
+        ShopManager sm = FindObjectOfType<ShopManager>();
+        if(sm != null)
+            sm.OnEndShopping -= StartWave;
     }
 
     private void Awake()

@@ -14,12 +14,16 @@ public class ShopManager : MonoBehaviour
 
     private void OnEnable()
     {
-        FindObjectOfType<EnemyGenerator>().OnEndWave += UpdateItems;
+        EnemyGenerator eg = FindObjectOfType<EnemyGenerator>();
+        if(eg != null)
+            eg.OnEndWave += UpdateItems;
     }
 
     private void OnDisable()
     {
-        FindObjectOfType<EnemyGenerator>().OnEndWave -= UpdateItems;
+        EnemyGenerator eg = FindObjectOfType<EnemyGenerator>();
+        if(eg != null)
+            eg.OnEndWave -= UpdateItems;
     }
 
     public void UpdateItems()

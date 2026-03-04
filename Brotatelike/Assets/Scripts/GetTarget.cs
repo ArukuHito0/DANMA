@@ -28,7 +28,7 @@ public static class GetTarget
 
         if (targetList.Count <= 0) return null;
 
-        foreach (T target in targetList)
+        foreach (T target in targetList.ToArray())
         {
             float sqrDist = (ownerPos - target.transform.position).sqrMagnitude;
 
@@ -40,5 +40,23 @@ public static class GetTarget
         }
 
         return _target;
+    }
+
+    public static void GetAllTargetinRange<T>(List<T> targetList, List<T> result, Vector3 ownerPos, float range) where T : MonoBehaviour
+    {
+        result?.Clear();
+        float _range = range * range;
+
+        if (targetList == null || targetList.Count <= 0) return;
+
+        foreach (T target in targetList.ToArray())
+        {
+            float sqrDist = (ownerPos - target.transform.position).sqrMagnitude;
+
+            if (sqrDist <= _range)
+            {
+                result.Add(target);
+            }
+        }
     }
 }

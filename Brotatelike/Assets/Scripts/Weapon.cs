@@ -22,37 +22,86 @@ public class Weapon : MonoBehaviour
     {
         while (true)
         {
-            yield return FireBullet();
-
+            if(weaponData.isTargetting)
+                yield return new WaitUntil(() => GetTarget.GetTargetInRange(EnemyBase.enemyList, transform.position, weaponData.range) != null);
+            
+            yield return Shooting();
             yield return new WaitForSeconds(weaponData.coolTime);
         }
     }
 
-    private IEnumerator FireBullet()
+    private float AngleOfBase()
+    {
+        var target = GetTarget.GetTargetInRange(EnemyBase.enemyList, transform.position, weaponData.range);
+
+        if(target == null || !weaponData.isTargetting) return weaponData.baseAngle;
+
+        return Mathf.Atan2(
+            target.transform.position.y - transform.position.y,
+            target.transform.position.x - transform.position.x
+            ) * Mathf.Rad2Deg;
+    }
+
+    private float AngleOfBullet(int num)
+    {
+        if(weaponData.spreadAngle == 0 || weaponData.bulletCnt <= 1) return 0;
+
+        if (weaponData.spreadAngle == 360.0f)
+            return (weaponData.spreadAngle / (float)weaponData.bulletCnt) * num;
+        else
+            return -(weaponData.spreadAngle / 2f) + (weaponData.spreadAngle / (float)(weaponData.bulletCnt - 1)) * num;
+    }
+
+    private float AngleOfShot(float shotAngle, float angle)
+    {
+        return shotAngle + angle;
+    }
+
+    private float AngleOfError(float angle)
+    {
+        float rndError = Random.Range(-weaponData.dispersion, weaponData.dispersion) / 100f * Mathf.Rad2Deg;
+
+        if(weaponData.spreadAngle != 360)
+            return Mathf.Clamp(angle + rndError, -(weaponData.spreadAngle / 2f), (weaponData.spreadAngle / 2));
+        else
+            return angle + rndError;
+    }
+
+    private float RadOfBullet(float targetAngle, float angle)
+    {
+        if (weaponData.dispersion != 0)
+            return AngleOfShot(targetAngle, AngleOfError(angle)) * Mathf.Deg2Rad;
+        else
+            return AngleOfShot(targetAngle, angle) * Mathf.Deg2Rad;
+    }
+
+    private Vector3 BulletVelocity(float rad)
+    {
+        return new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)) * weaponData.bulletSpeed;
+    }
+
+    private void ShotBullet(float rad)
+    {
+        BulletController bullet = pool.GetPooledObject(transform.position).GetComponent<BulletController>();
+        bullet.Initialize(weaponData, BulletVelocity(rad));
+    }
+
+    private IEnumerator Shooting()
     {
         if (weaponData.bulletCnt <= 0) yield break;
 
-        var baseAngle = Mathf.Atan2(weaponData.fireDirection.y, weaponData.fireDirection.x) * Mathf.Rad2Deg;
-
-        float fireRate = weaponData.cycleTime / weaponData.bulletCnt;
+        var targetAngle = AngleOfBase();
 
         for (int i = 0; i < weaponData.bulletCnt; i++)
         {
-            var angle = (weaponData.spreadAngle / weaponData.bulletCnt) * i;
+            float angle = AngleOfBullet(i);
 
-            var offset = weaponData.spreadAngle < 360.0f ? (weaponData.spreadAngle / weaponData.bulletCnt) * (weaponData.bulletCnt - 1) / 2f : 0;
+            float rad = RadOfBullet(targetAngle, angle);
 
-            var finalAngle = baseAngle + angle - offset;
-
-            var rad = finalAngle * Mathf.Deg2Rad;
-
-            Vector2 velocity = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)) * weaponData.bulletSpeed;
-
-            BulletController bullet = pool.GetPooledObject(transform.position).GetComponent<BulletController>();
-            bullet.Initialize(weaponData, velocity);
+            ShotBullet(rad);
 
             if(weaponData.cycleTime != 0)
-                yield return new WaitForSeconds(fireRate);
+                yield return new WaitForSeconds(weaponData.fireRate);
         }
     }
 }

@@ -6,8 +6,8 @@ public class ExpComponent : MonoBehaviour
 {
     private int currentLevel = 1;
     public int CurrentLevel => currentLevel;
-    public int exp { get; private set; } = 0;
-    public int levelUpExp { get; private set; } = 10;
+    public long exp { get; private set; } = 0;
+    public long levelUpExp { get; private set; } = 20;
     public float expRate
     {
         get
@@ -25,16 +25,16 @@ public class ExpComponent : MonoBehaviour
         OnExpChanged?.Invoke(0);
     }
 
-    public void AddExp(int amount)
+    public void AddExp(long amount)
     {
         exp += amount;
 
         if (exp >= levelUpExp)
         {
-            var e = exp - levelUpExp;
+            long e = exp - levelUpExp;
             exp = e <= 0 ? 0 : e;
             LevelUp();
-            levelUpExp = CurrentLevel * 10 + (int)((CurrentLevel * 0.07f * levelUpExp) * 0.2f);
+            levelUpExp = CurrentLevel * 10 + (long)((CurrentLevel * 0.1f * levelUpExp) * 0.2f);
 
             if (exp != 0)
             {
@@ -51,9 +51,9 @@ public class ExpComponent : MonoBehaviour
 
         OnLevelChanged?.Invoke();
 
-        OnOpenUpgrade?.Invoke("UpgradeUI", true);
-        OnOpenUpgrade?.Invoke("StatusUI", true);
+        //OnOpenUpgrade?.Invoke("UpgradeUI", true);
+        //OnOpenUpgrade?.Invoke("StatusUI", true);
 
-        TimeManager.SetTimeMode(TimeManager.TimeMode.Pause);
+        //TimeManager.SetTimeMode(TimeManager.TimeMode.Pause);
     }
 }

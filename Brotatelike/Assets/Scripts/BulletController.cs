@@ -15,6 +15,7 @@ public class BulletController : PooledObject
     {
         weaponData = data;
         this.velocity = velocity;
+        transform.localScale = new Vector2(weaponData.bulletSize, weaponData.bulletSize);
     }
 
     protected override void OnSpawn()
