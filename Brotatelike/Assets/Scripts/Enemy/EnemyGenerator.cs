@@ -24,6 +24,8 @@ public class EnemyGenerator : MonoBehaviour
     public event Action<int> OnUpdateWaveTime;
     public event Action OnEndWave;
 
+    private Coroutine activeWave;
+
     private void OnEnable()
     {
         ShopManager sm = FindObjectOfType<ShopManager>();
@@ -53,7 +55,13 @@ public class EnemyGenerator : MonoBehaviour
 
     private void StartWave()
     {
-        StartCoroutine(SpawnEnemy(waveDataList[waveIdx]));
+        if(activeWave != null)
+        {
+            StopCoroutine(activeWave);
+            activeWave = null;
+        }
+
+        activeWave = StartCoroutine(SpawnEnemy(waveDataList[waveIdx]));
     }
 
     private IEnumerator SpawnEnemy(WaveData wave)

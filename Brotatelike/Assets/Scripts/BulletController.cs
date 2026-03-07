@@ -15,7 +15,6 @@ public class BulletController : PooledObject
     {
         weaponData = data;
         this.velocity = velocity;
-        transform.localScale = new Vector2(weaponData.bulletSize, weaponData.bulletSize);
     }
 
     protected override void OnSpawn()
@@ -31,7 +30,7 @@ public class BulletController : PooledObject
 
     private void LateUpdate()
     {
-        if ((transform.position - startPos).sqrMagnitude > weaponData.range * weaponData.range) Release();
+        if ((transform.position - startPos).sqrMagnitude > weaponData.Range * weaponData.Range) Release();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -39,7 +38,7 @@ public class BulletController : PooledObject
         if (collision.CompareTag(targetTag))
         {
             IDamageable target = collision.GetComponent<IDamageable>();
-            target.TakeDamage(weaponData.damage);
+            target.TakeDamage(weaponData.Damage);
 
             Release();
         }

@@ -3,9 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemCard : MonoBehaviour
+public class ProductCard : MonoBehaviour
 {
-    public ItemData itemData {  get; private set; }
+    public ProductBaseData productData {  get; private set; }
 
     [SerializeField] private Sprite lockImage;
     [SerializeField] private Sprite unlockImage;
@@ -13,16 +13,16 @@ public class ItemCard : MonoBehaviour
     [SerializeField] private GameObject itemCard;
     [SerializeField] private Image itemFrame;
     [SerializeField] private Image lockIcon;
+    [SerializeField] private TextMeshProUGUI lockText;
     [SerializeField] private Image itemIcon;
     [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private TextMeshProUGUI itemEffect;
-    [SerializeField] private TextMeshProUGUI itemEffectValue;
     [SerializeField] private TextMeshProUGUI itemPrice;
 
     public bool isPayied { get; private set; } = false;
     public bool isLocked { get; private set; } = false;
 
-    public event Action<ItemData> OnPayItem;
+    public event Action<ProductBaseData> OnPayItem;
 
     public void Initialize()
     {
@@ -30,13 +30,13 @@ public class ItemCard : MonoBehaviour
 
         isPayied = false;
 
-        itemFrame.color = itemData.tier.GetTierColor();
-        itemIcon.sprite = itemData.itemIcon;
-        itemName.text = itemData.itemName;
-        itemEffect.text = itemData.GetUpgradeName();
-        itemEffectValue.text = itemData.GetUpgradeValueText();
-        itemPrice.text = itemData.itemPrice.ToString() + " G";
+        itemFrame.color = productData.Tier.GetTierColor();
+        itemIcon.sprite = productData.Icon;
+        itemName.text = productData.Name;
+        itemEffect.text = productData.GetDescriptionText();
+        itemPrice.text = productData.Price.ToString() + " G";
         lockIcon.sprite = isLocked ? lockImage : unlockImage;
+        lockText.text = isLocked ? "ロック : ON" : "ロック : OFF";
     }
 
     public void SetItemLock()
@@ -45,25 +45,24 @@ public class ItemCard : MonoBehaviour
 
         isLocked = !isLocked;
         lockIcon.sprite = isLocked ? lockImage : unlockImage;
+        lockText.text = isLocked ? "ロック : ON" : "ロック : OFF";
     }
 
-    public void SetItemData(ItemData item)
+    public void SetProductData(ProductBaseData data)
     {
         if (isLocked) return;
 
-        this.itemData = item;
+        this.productData = data;
     }
 
-    public void PayItem()
+    public void PayProduct()
     {
-        itemData.Upgrade();
-        itemPrice.text = "Sold Out !";
+        productData.PayProduct();
 
         isPayied = true;
         isLocked = false;
-        lockIcon.sprite = unlockImage;
 
-        OnPayItem?.Invoke(itemData);
+        OnPayItem?.Invoke(productData);
 
         itemCard.SetActive(false);
     }

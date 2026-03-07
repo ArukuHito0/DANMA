@@ -8,6 +8,8 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] private WeaponData weaponData;
 
+    private Coroutine activeCycle;
+
     private void Awake()
     {
         pool = GameObject.Find("BulletPool").GetComponent<ObjectPool>();
@@ -15,7 +17,21 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(WeaponAttackCycle());
+        StartCycle();
+    }
+
+    public void SetWeaponData(WeaponData weaponData) => this.weaponData = weaponData;
+
+    private void StartCycle()
+    {
+        if (activeCycle != null)
+        {
+            StopCoroutine(activeCycle);
+            activeCycle = null;
+        }
+
+        activeCycle = StartCoroutine(WeaponAttackCycle());
+
     }
 
     private IEnumerator WeaponAttackCycle()
@@ -23,16 +39,35 @@ public class Weapon : MonoBehaviour
         while (true)
         {
             if(weaponData.isTargetting)
-                yield return new WaitUntil(() => GetTarget.GetTargetInRange(EnemyBase.enemyList, transform.position, weaponData.range) != null);
+                yield return new WaitUntil(() => GetTarget.GetTargetInRange(EnemyBase.enemyList, transform.position, weaponData.Range) != null);
             
             yield return Shooting();
-            yield return new WaitForSeconds(weaponData.coolTime);
+            yield return new WaitForSeconds(weaponData.CoolTime);
+        }
+    }
+
+    private IEnumerator Shooting()
+    {
+        if (weaponData.bulletCnt <= 0) yield break;
+
+        var targetAngle = AngleOfBase();
+
+        for (int i = 0; i < weaponData.bulletCnt; i++)
+        {
+            float angle = AngleOfBullet(i);
+
+            float rad = RadOfBullet(targetAngle, angle);
+
+            ShotBullet(rad);
+
+            if (weaponData.cycleTime != 0)
+                yield return new WaitForSeconds(weaponData.fireRate);
         }
     }
 
     private float AngleOfBase()
     {
-        var target = GetTarget.GetTargetInRange(EnemyBase.enemyList, transform.position, weaponData.range);
+        var target = GetTarget.GetTargetInRange(EnemyBase.enemyList, transform.position, weaponData.Range);
 
         if(target == null || !weaponData.isTargetting) return weaponData.baseAngle;
 
@@ -84,24 +119,5 @@ public class Weapon : MonoBehaviour
     {
         BulletController bullet = pool.GetPooledObject(transform.position).GetComponent<BulletController>();
         bullet.Initialize(weaponData, BulletVelocity(rad));
-    }
-
-    private IEnumerator Shooting()
-    {
-        if (weaponData.bulletCnt <= 0) yield break;
-
-        var targetAngle = AngleOfBase();
-
-        for (int i = 0; i < weaponData.bulletCnt; i++)
-        {
-            float angle = AngleOfBullet(i);
-
-            float rad = RadOfBullet(targetAngle, angle);
-
-            ShotBullet(rad);
-
-            if(weaponData.cycleTime != 0)
-                yield return new WaitForSeconds(weaponData.fireRate);
-        }
     }
 }

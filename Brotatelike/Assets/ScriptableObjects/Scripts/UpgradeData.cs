@@ -7,7 +7,7 @@ public class UpgradeData : ScriptableObject, IUpgrade
     [Serializable]
     public struct UpgradeStats
     {
-        public UpgradeStatus status;
+        public PlayerStatus status;
         public int value;
     }
 
@@ -30,7 +30,7 @@ public class UpgradeData : ScriptableObject, IUpgrade
 
         for (int i = 0; i < upgrades.Length; i++)
         {
-            s += upgrades[i].status.GetUpgradeStatusName();
+            s += upgrades[i].status.GetPlayerStatusName();
 
             if(i != upgrades.Length - 1) s += "\n";
         }
@@ -52,13 +52,8 @@ public class UpgradeData : ScriptableObject, IUpgrade
         return s;
     }
 
-    public string GetEffectValueColor(float value)
-    {
-        return value > 0 ? "<color=green>+" : "<color=red>";
-    }
-
     public string ValueToString(float value)
     {
-        return GetEffectValueColor(value) + value.ToString();
+        return value.GetValueColorText();
     }
 }

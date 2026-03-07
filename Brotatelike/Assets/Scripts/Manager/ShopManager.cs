@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
-    [SerializeField] private List<ItemData> itemDatas;
-    [SerializeField] private ItemCard[] items;
+    [SerializeField] private List<ProductBaseData> productDataList;
+    [SerializeField] private ProductCard[] products;
 
-    private HashSet<ItemData> lineup = new HashSet<ItemData>();
+    private HashSet<ProductBaseData> lineup = new HashSet<ProductBaseData>();
 
     public event Action OnEndShopping;
 
@@ -16,35 +16,35 @@ public class ShopManager : MonoBehaviour
     {
         EnemyGenerator eg = FindObjectOfType<EnemyGenerator>();
         if(eg != null)
-            eg.OnEndWave += UpdateItems;
+            eg.OnEndWave += UpdateProducts;
     }
 
     private void OnDisable()
     {
         EnemyGenerator eg = FindObjectOfType<EnemyGenerator>();
         if(eg != null)
-            eg.OnEndWave -= UpdateItems;
+            eg.OnEndWave -= UpdateProducts;
     }
 
-    public void UpdateItems()
+    public void UpdateProducts()
     {
-        foreach (ItemCard item in items)
+        foreach (ProductCard product in products)
         {
-            if (item.isLocked) continue;
-            else lineup.Remove(item.itemData);
+            if (product.isLocked) continue;
+            else lineup.Remove(product.productData);
         }
 
-        List<ItemData> list = itemDatas.Where(k => !lineup.Contains(k)).OrderBy(x => Guid.NewGuid()).ToList();
+        List<ProductBaseData> list = productDataList.Where(k => !lineup.Contains(k)).OrderBy(x => Guid.NewGuid()).ToList();
         
         int idx = 0;
 
-        foreach (ItemCard item in items)
+        foreach (ProductCard product in products)
         {
-            if(item.isLocked) continue;
+            if(product.isLocked) continue;
 
             lineup.Add(list[idx]);
-            item.SetItemData(list[idx]);
-            item.Initialize();
+            product.SetProductData(list[idx]);
+            product.Initialize();
 
             idx++;
         }

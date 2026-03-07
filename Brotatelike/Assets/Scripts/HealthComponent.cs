@@ -18,7 +18,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
     public bool IsDead => currentHealth <= 0;
 
     public event Action<float> OnHealthChanged;
-    public event Action<int> OnDamaged;
+    public static event Action<Vector3, int> OnDamaged;
     public event Action OnDead;
 
     public void SetHealth(float health)
@@ -42,7 +42,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
         var resultDamage = damage;
         currentHealth -= resultDamage;
 
-        OnDamaged?.Invoke((int)damage);
+        OnDamaged?.Invoke(transform.position, (int)damage);
 
         if (IsDead)
         {

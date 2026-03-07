@@ -1,16 +1,10 @@
-using Mono.Cecil.Cil;
 using ObjectPoolSystem;
-using System;
-using System.Collections;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Video;
 
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
+
     [SerializeField] private PlayerStatusData playerStatus;
     public PlayerStatusData PlayerStatus => playerStatus;
     public PlayerRuntimeStatus playerRuntimeStatus { get; private set; } = new PlayerRuntimeStatus();
@@ -31,6 +25,11 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 moveDir = Vector3.zero;
 
+    private void OnEnable()
+    {
+        Instance = this;
+    }
+
     private void OnDestroy()
     {
         Instance = null;
@@ -41,8 +40,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 60;
-
-        Instance = this;
 
         bulletPool = GameObject.Find("BulletPool").GetComponent<ObjectPool>();
         
