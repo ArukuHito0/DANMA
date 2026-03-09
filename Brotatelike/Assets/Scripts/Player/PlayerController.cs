@@ -1,4 +1,3 @@
-using ObjectPoolSystem;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,8 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerStatusData playerStatus;
     public PlayerStatusData PlayerStatus => playerStatus;
     public PlayerRuntimeStatus playerRuntimeStatus { get; private set; } = new PlayerRuntimeStatus();
-
-    private ObjectPool bulletPool;
+    public Wallet wallet { get; private set; } = new Wallet();
 
     private HealthComponent healthComponent;
     public HealthComponent HealthComponent => healthComponent;
@@ -41,8 +39,6 @@ public class PlayerController : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 
-        bulletPool = GameObject.Find("BulletPool").GetComponent<ObjectPool>();
-        
         healthComponent = GetComponent<HealthComponent>();
         healthComponent.OnDead += () => gameObject.SetActive(false);
 
