@@ -8,6 +8,8 @@ public class CoinItem : PickableItem
 
     protected override void OnPickUpItem()
     {
+        SoundUtil.PlaySe("GetCoin");
+
         PlayerController.Instance.wallet.AddMoney(gold);
     }
 }

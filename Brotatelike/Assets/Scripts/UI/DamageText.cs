@@ -32,6 +32,11 @@ public class DamageText : PooledObject
             damageCache = damage;
         }
 
+        StartAnim();
+    }
+
+    public void StartAnim()
+    {
         StartCoroutine(DamageTextAnim());
     }
 
@@ -39,7 +44,7 @@ public class DamageText : PooledObject
     {
         float time = 0f;
         Vector3 startPos = transform.position;
-        Vector3 endPos = transform.position + new Vector3(Random.Range(-0.7f, 0.7f), Random.Range(0.8f, 1.3f));
+        Vector3 endPos = transform.position + new Vector3(Random.Range(-0.7f, 0.7f), Random.Range(-1.3f, 1.3f));
 
         while (time < animTime)
         {

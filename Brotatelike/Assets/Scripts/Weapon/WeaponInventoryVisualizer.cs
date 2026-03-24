@@ -7,14 +7,14 @@ public class WeaponInventoryVisualizer : MonoBehaviour
 {
     [SerializeField] List<WeaponIcon> weaponIcons;
 
-    private void OnEnable()
+    private void Start()
     {
-        PlayerController.Instance.weaponInventory.OnWeaponSlotChanged += VisualizeInventory;
+        PlayerController.weaponInventory.OnWeaponSlotChanged += VisualizeInventory;
     }
 
     private void OnDisable()
     {
-        PlayerController.Instance.weaponInventory.OnWeaponSlotChanged -= VisualizeInventory;
+        PlayerController.weaponInventory.OnWeaponSlotChanged -= VisualizeInventory;
     }
 
     private void VisualizeInventory(WeaponData data, int idx)

@@ -45,8 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f287c304a588a5f439fc5ee5984190f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleManager
-  postProcessVolume: {fileID: 4058524718634968854}
-  fadeDuration: 1.5
+  fadeDuration: 0.8
 --- !u!114 &4058524718634968854
 MonoBehaviour:
   m_ObjectHideFlags: 0

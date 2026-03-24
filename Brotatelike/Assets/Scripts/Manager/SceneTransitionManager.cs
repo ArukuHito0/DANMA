@@ -59,6 +59,8 @@ public class SceneTransitionManager : MonoBehaviour
 
     private IEnumerator FadeOutAndLoad(string sceneName)
     {
+        SoundUtil.StopBgm();
+
         isTransitioning = true;
         float startValue = colorAdjustments.postExposure.value;
         float endValue = -10f;
@@ -74,6 +76,12 @@ public class SceneTransitionManager : MonoBehaviour
         yield return FadeIn();
 
         isTransitioning = false;
+
+        switch (sceneName)
+        {
+            case "TitleScene": SoundUtil.PlayBgm("Title"); break;
+            case "MainScene":  SoundUtil.PlayBgm("InGame"); break;
+        }
     }
 
     private IEnumerator Fade(float start, float end)

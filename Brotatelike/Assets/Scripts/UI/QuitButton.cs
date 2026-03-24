@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class QuitButton : MonoBehaviour
+public class QuitButton : SelectableButton
 {
-    public void OnQuitButtonClicked()
+    protected override void OnClick()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

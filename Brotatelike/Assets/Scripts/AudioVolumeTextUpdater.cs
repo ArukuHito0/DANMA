@@ -18,19 +18,21 @@ public class AudioVolumeTextUpdater : MonoBehaviour
     {
         audioSettings.onMusicVolumeChanged += UpdateMusicVolumeText;
         audioSettings.onSeVolumeChanged += UpdateSeVolumeText;
-        audioSettings.onSetDefaultVolume += SetDefaultVolume;
+        audioSettings.onSetDefaultVolume += SetVolumeBar;
     }
 
     private void OnDisable()
     {
         audioSettings.onMusicVolumeChanged -= UpdateMusicVolumeText;
         audioSettings.onSeVolumeChanged -= UpdateSeVolumeText;
-        audioSettings.onSetDefaultVolume -= SetDefaultVolume;
+        audioSettings.onSetDefaultVolume -= SetVolumeBar;
     }
 
     private void Start()
     {
-        SetDefaultVolume();
+        UpdateMusicVolumeText();
+        UpdateSeVolumeText();
+        SetVolumeBar();
     }
 
     private void UpdateMusicVolumeText()
@@ -45,10 +47,10 @@ public class AudioVolumeTextUpdater : MonoBehaviour
         seVolumeHandleIcon.sprite = GetVolumeSprite(audioSettings.seVolume);
     }
 
-    private void SetDefaultVolume()
+    private void SetVolumeBar()
     {
-        musicVolumeSlider.value = 50;
-        seVolumeSlider.value = 50;
+        musicVolumeSlider.SetValueWithoutNotify(audioSettings.musicVolume);
+        seVolumeSlider.SetValueWithoutNotify(audioSettings.seVolume);
     }
 
     private Sprite GetVolumeSprite(float volume)

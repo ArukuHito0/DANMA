@@ -8,6 +8,8 @@ public class ExperienceItem : PickableItem
 
     protected override void OnPickUpItem()
     {
+        SoundUtil.PlaySe("GetExp");
+
         PlayerController.Instance.ExpComponent.AddExp(experiencePoint);
     }
 }

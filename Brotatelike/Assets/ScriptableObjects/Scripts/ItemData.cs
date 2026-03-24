@@ -32,7 +32,7 @@ public class ItemData : ScriptableObject, IProduct
             item.status.ApplyStatusUP(item.value);
         }
 
-        PlayerController.Instance.itemInventory.AddItem(this);
+        PlayerController.itemInventory.AddItem(this);
     }
 
     public string GetDescriptionText()

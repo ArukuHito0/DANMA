@@ -25,7 +25,7 @@ public abstract class EnemyBase : PooledObject
 
     public void Initialize()
     {
-        healthComponent.SetHealth(enemyStatus.MaxHealth);
+        healthComponent.SetHealthStats(enemyStatus.MaxHealth);
     }
 
     private void OnDisable()
@@ -66,7 +66,11 @@ public abstract class EnemyBase : PooledObject
     {
         foreach (var config in enemyStatus.dropItemList)
         {
-            ObjectPoolManager.Instance.GetPooledObject(config.itemPrefab, transform.position);
+            ObjectPoolManager.Instance.GetPooledObject(
+                config.itemPrefab, 
+                transform.position + 
+                new Vector3(UnityEngine.Random.Range(-0.5f, 0.5f), 
+                            UnityEngine.Random.Range(-0.5f, 0.5f)));
         }
     }
 

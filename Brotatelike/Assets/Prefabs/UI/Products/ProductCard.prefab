@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 6389519391824907176}
   - component: {fileID: 99608290881863787}
   - component: {fileID: 5701408449259618245}
+  - component: {fileID: 272776259183886015}
   m_Layer: 5
   m_Name: PriceLabel
   m_TagString: Untagged
@@ -256,22 +257,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
   m_Delegates:
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2317643855741216471}
-          m_TargetAssemblyTypeName: ProductCard, Assembly-CSharp
-          m_MethodName: PayProduct
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 0
     callback:
       m_PersistentCalls:
@@ -304,6 +289,37 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &272776259183886015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151684525925982110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe7d797ac21c7e47976180e5e95f284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ClickableButton
+  enterSe: {fileID: 8300000, guid: 8cd394fd50f88534a92ad5745c6e38ca, type: 3}
+  clickSe: {fileID: 0}
+  muteEnterSE: 0
+  muteClickSE: 1
+  onClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2317643855741216471}
+        m_TargetAssemblyTypeName: ProductCard, Assembly-CSharp
+        m_MethodName: PayProduct
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1780406647466137173
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,6 +792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68121624cc88d334aad21259a60c1e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemCard
+  sellSe: {fileID: 8300000, guid: 1117d5f41aab9fd4bb7edf12579a2fa9, type: 3}
+  sellFailedSe: {fileID: 8300000, guid: 2d77a98d162c5ab45b0b5a457ec644fe, type: 3}
   lockImage: {fileID: 21300000, guid: 6c9174590026f7242a6cd7705af9e0e6, type: 3}
   unlockImage: {fileID: 21300000, guid: f73a7ef2c86e30b41bedd27b9c24e8af, type: 3}
   iconBackground: {fileID: 1240033858139316523}

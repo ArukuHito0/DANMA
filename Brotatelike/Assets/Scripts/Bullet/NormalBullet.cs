@@ -4,7 +4,8 @@ public class NormalBullet : BulletBase
 {
     protected override void OnHit()
     {
-        hitCache?.TakeDamage(DamageCalculator.CalculateDamage(weaponData.Damage, weaponData.CriticalChance, weaponData.CriticalMultiplier));
+        var result = DamageCalculator.CalculateDamage(weaponData.Damage, weaponData.CriticalChance, weaponData.CriticalMultiplier);
+        hitCache?.TakeDamage(result.damage, result.isCritical);
         Release();
     }
 }

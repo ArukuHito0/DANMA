@@ -14,13 +14,18 @@ public class HealthComponent : MonoBehaviour, IDamageable
         }
     }
 
+    public float armor {  get; private set; } = 0;
+    public float dodgeChance { get; private set; } = 0;
+
     public bool IsDead => currentHealth <= 0;
 
     public event Action<float> OnHealthChanged;
     public static event Action<Vector3, int> OnDamaged;
+    public static event Action<Vector3, int> OnCriticalDamaged;
+    public static event Action<Vector3> OnDodgeSuccess;
     public UnityEvent OnDead;
 
-    public void SetHealth(float health)
+    public void SetHealthStats(float health)
     {
         currentHealth = health;
         maxHealth = health;
@@ -28,27 +33,28 @@ public class HealthComponent : MonoBehaviour, IDamageable
         OnHealthChanged?.Invoke(healthRate);
     }
 
+    public void SetArmor(float armor) => this.armor = armor;
+    public void SetDodgeChance(float dodgeChance) => this.dodgeChance = dodgeChance * 0.01f;
+
     public void AddMaxHealth(float amount)
     {
         maxHealth += amount;
         Heal(amount);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool isCritical = false)
     {
-        if(IsDead) return;
+        if (IsDead) return;
 
-        var resultDamage = damage;
-        currentHealth -= resultDamage;
+        // 回避成功でノーダメージ
+        if (DodgeCheck()) return;
 
-        OnDamaged?.Invoke(transform.position, (int)damage);
+        RemoveHealth(damage);
 
-        if (IsDead)
-        {
-            Dead();
-        }
-
-        OnHealthChanged?.Invoke(healthRate);
+        if (isCritical)
+            OnCriticalDamaged?.Invoke(transform.position, (int)damage);
+        else
+            OnDamaged?.Invoke(transform.position, (int)damage);
     }
 
     public void Heal(float amount)
@@ -60,7 +66,34 @@ public class HealthComponent : MonoBehaviour, IDamageable
 
     private void Dead()
     {
+        SoundUtil.PlaySe("Defeat");
+
         OnHealthChanged?.Invoke(0);
         OnDead?.Invoke();
+    }
+
+    private void RemoveHealth(float amount)
+    {
+        currentHealth -= amount;
+
+        if (IsDead)
+        {
+            Dead();
+        }
+
+        OnHealthChanged?.Invoke(healthRate);
+    }
+
+    private bool DodgeCheck()
+    {
+        if (UnityEngine.Random.value <= dodgeChance)
+        {
+            OnDodgeSuccess?.Invoke(transform.position);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

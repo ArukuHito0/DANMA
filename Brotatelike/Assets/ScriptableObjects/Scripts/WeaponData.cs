@@ -57,7 +57,7 @@ public class WeaponData : ScriptableObject, IProduct
 
     public void PayProduct()
     {
-        PlayerController.Instance.weaponInventory.AddWeapon(this);
+        PlayerController.weaponInventory.AddWeapon(this);
     }
 
     public string GetDescriptionText()
@@ -76,10 +76,10 @@ public class WeaponData : ScriptableObject, IProduct
     {
         if (!PlayerController.Instance.wallet.CanBuy(Price)) return false;
 
-        if (PlayerController.Instance.weaponInventory.CanAddWeapon())
+        if (PlayerController.weaponInventory.CanAddWeapon())
             return true;
         else
-            return PlayerController.Instance.weaponInventory.CanUpgradeWeapon(this);
+            return PlayerController.weaponInventory.CanUpgradeWeapon(this);
     }
     #endregion
 

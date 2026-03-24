@@ -10,17 +10,17 @@ public class ItemInventoryVisualizer : MonoBehaviour
 
     private void Start()
     {
-        PlayerController.Instance.itemInventory.OnItemAdded += VisualizeInventory;
+        PlayerController.itemInventory.OnItemAdded += VisualizeInventory;
     }
 
     private void OnDisable()
     {
-        PlayerController.Instance.itemInventory.OnItemAdded -= VisualizeInventory;
+        PlayerController.itemInventory.OnItemAdded -= VisualizeInventory;
     }
 
     private void VisualizeInventory(ItemData data, int cnt)
     {
-        if (PlayerController.Instance.itemInventory.GetItemCnt(data) == 1)
+        if (PlayerController.itemInventory.GetItemCnt(data) == 1)
         {
             ItemIcon icon = Instantiate(productIconPrefab, iteminventoryContent.transform);
 

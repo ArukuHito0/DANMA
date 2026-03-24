@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
      public Wallet wallet { get; private set; } = new Wallet();
 
     // 装備のインベントリ
-    public WeaponInventory weaponInventory { get; private set; }
-    public ItemInventory itemInventory { get; private set; }
+    public static WeaponInventory weaponInventory { get; private set; }
+    public static ItemInventory itemInventory { get; private set; }
 
     // 体力
     private HealthComponent healthComponent;
@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 moveDir = Vector3.zero;
 
+    private bool canMoving = true;
+
     private void OnDestroy()
     {
         Instance = null;
@@ -48,17 +50,16 @@ public class PlayerController : MonoBehaviour
 
         weaponInventory = new WeaponInventory();
         itemInventory = new ItemInventory();
-        
-        wallet.SetMoney(100);
     }
 
     private void Start()
     {
-        healthComponent.SetHealth(playerRuntimeStatus.MaxHealth);
+        healthComponent.SetHealthStats(playerRuntimeStatus.MaxHealth);
+        healthComponent.SetDodgeChance(playerRuntimeStatus.DodgeChance);
 
         weaponInventory.AddWeapon(firstWeapon);
 
-        wallet.SetMoney(100);
+        wallet.SetMoney(playerStatus.firstGold);
     }
 
     private void Update()
@@ -67,10 +68,13 @@ public class PlayerController : MonoBehaviour
         var y = Input.GetAxisRaw("Vertical");
         moveDir = new Vector3(x, y, 0).normalized;
 
-        var pos = transform.position + moveDir * playerRuntimeStatus.MoveSpeed * Time.deltaTime;
-        pos.x = Mathf.Clamp(pos.x, -fieldSize.localScale.x * 0.5f + 1, fieldSize.localScale.x * 0.5f - 1);
-        pos.y = Mathf.Clamp(pos.y, -fieldSize.localScale.y * 0.5f + 1, fieldSize.localScale.y * 0.5f - 1);
-        transform.position = pos;
+        if (canMoving)
+        {
+            var pos = transform.position + moveDir * playerRuntimeStatus.MoveSpeed * Time.deltaTime;
+            pos.x = Mathf.Clamp(pos.x, -fieldSize.localScale.x * 0.5f + 1, fieldSize.localScale.x * 0.5f - 1);
+            pos.y = Mathf.Clamp(pos.y, -fieldSize.localScale.y * 0.5f + 1, fieldSize.localScale.y * 0.5f - 1);
+            transform.position = pos;
+        }
     }
 
     public void StartAllWeaponCoroutine()
@@ -89,5 +93,20 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"{weapon.GetWeaponData().Name}の攻撃サイクルを停止");
             weapon.StopAttack(this);
         }
+    }
+
+    public void PlayerFixed()
+    {
+        canMoving = false;
+    }
+
+    public void PlayerMovable()
+    {
+        canMoving= true;
+    }
+
+    public void ResetPlayerPos()
+    {
+        transform.position = Vector3.zero;
     }
 }

@@ -7,6 +7,9 @@ public class ProductCard : MonoBehaviour
 {
     public IProduct product {  get; private set; }
 
+    [SerializeField] private AudioClip sellSe;
+    [SerializeField] private AudioClip sellFailedSe;
+
     [SerializeField] private Sprite lockImage;
     [SerializeField] private Sprite unlockImage;
 
@@ -22,6 +25,9 @@ public class ProductCard : MonoBehaviour
 
     public bool isPayied { get; private set; } = false;
     public bool isLocked { get; private set; } = false;
+    public bool isSale { get; private set; } = false;
+
+    private int price = 0;
 
     private void OnEnable()
     {
@@ -50,9 +56,22 @@ public class ProductCard : MonoBehaviour
         productIcon.sprite = product.Icon;
         productName.text = product.Name;
         productEffect.text = product.GetDescriptionText();
-        productPrice.text = product.Price.ToString();
+        productPrice.SetText("{0}", price);
         lockIcon.sprite = isLocked ? lockImage : unlockImage;
         lockText.text = isLocked ? "ロック : ON" : "ロック : OFF";
+
+        if (PlayerController.Instance.wallet.CanBuy(price))
+        {
+            // セール時は緑色で価格を表示
+            if(isSale)
+                productPrice.color = Color.green;
+            else
+                productPrice.color = Color.white;
+        }
+        else
+        {
+            productPrice.color = Color.red;
+        }
     }
 
     public void SetProductLock()
@@ -69,6 +88,14 @@ public class ProductCard : MonoBehaviour
         if (isLocked) return;
 
         this.product = data;
+
+        // 商品をセールにするか
+        if (UnityEngine.Random.value < PlayerController.Instance.playerRuntimeStatus.SaleSpawnChance * 0.01f)
+            isSale = true;
+        else
+            isSale = false;
+
+        price = PriceCalculate(data.Price);
     }
 
     public void PayProduct()
@@ -76,10 +103,13 @@ public class ProductCard : MonoBehaviour
         if (!product.CanBuy())
         {
             Debug.Log("購入条件を満たしていません");
+            SoundUtil.PlaySe(sellFailedSe.name);
             return;
         }
 
-        PlayerController.Instance.wallet.RemoveMoney(product.Price);
+        SoundUtil.PlaySe(sellSe.name);
+
+        PlayerController.Instance.wallet.RemoveMoney(price);
 
         product?.PayProduct();
 
@@ -89,5 +119,16 @@ public class ProductCard : MonoBehaviour
         priceLabel.rectTransform.localScale = new Vector3(1, 1, 1);
 
         gameObject.SetActive(false);
+    }
+
+    // 価格計算
+    private int PriceCalculate(float basePrice)
+    {
+        basePrice -= basePrice * (PlayerController.Instance.playerRuntimeStatus.ItemPriceRate * 0.01f);
+
+        if (isSale)
+            basePrice *= 0.5f;
+
+        return (int)basePrice;
     }
 }

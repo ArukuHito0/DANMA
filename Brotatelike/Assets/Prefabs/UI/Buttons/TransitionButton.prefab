@@ -163,6 +163,34 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: SetTrigger
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: PlayStart
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: SetTrigger
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: PlayStart
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &-844561235036322428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,7 +203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c497d9a17c8fb458a4ddd4c231c01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  transitionSceneName: 
+  enterSe: {fileID: 8300000, guid: ce053a9ee3b317e4d8be4af6acdd168b, type: 3}
+  clickSe: {fileID: 8300000, guid: 9c4765016b1fce04bb941528117f2afa, type: 3}
+  muteEnterSE: 0
+  muteClickSE: 0
+  transitionSceneName: MainScene
 --- !u!1 &2842958654690444702
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +348,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Title
+  m_text: Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cc8acedd0b1e5754d85bdae825c641d5, type: 2}
   m_sharedMaterial: {fileID: -3528503425453968825, guid: cc8acedd0b1e5754d85bdae825c641d5, type: 2}

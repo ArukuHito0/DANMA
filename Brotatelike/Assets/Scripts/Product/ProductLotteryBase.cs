@@ -53,11 +53,11 @@ public abstract class ProductLotteryBase<T> : ScriptableObject, IProductLottery
                 // 出現するようになってからの経過ウェーブ数分で計算
                 float chance = (config.waveAddChance * (EnemyGenerator.Instance.currentWaveCnt - ((int)config.unlockWaveNum - 1)) + config.baseChance) * (1 + (PlayerController.Instance.playerRuntimeStatus.Luck * 0.01f));
 
-                Debug.Log(chance);
-                Debug.Log($"運補正; {1 + (PlayerController.Instance.playerRuntimeStatus.Luck * 0.01f)}");
+                //Debug.Log(chance);
+                //Debug.Log($"運補正; {1 + (PlayerController.Instance.playerRuntimeStatus.Luck * 0.01f)}");
                 
                 chance = Mathf.Clamp(chance, 0, config.maxChance);
-                Debug.Log($"{config.tier.ToString()}の出現確率: {chance}");
+                //Debug.Log($"{config.tier.ToString()}の出現確率: {chance}");
 
                 // 計算結果を格納
                 activeChances[config.tier] = chance;
@@ -96,8 +96,6 @@ public abstract class ProductLotteryBase<T> : ScriptableObject, IProductLottery
             // 抽選中のティアのキーが登録されていて、そのキーのリストが空でないか確認
             if (dataDict.TryGetValue(pair.Key, out var list) && list.Any())
             {
-                Debug.Log(pair.Key);
-
                 T product = list[UnityEngine.Random.Range(0, list.Count)];
 
                 return product;

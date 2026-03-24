@@ -163,22 +163,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - eventID: 4
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2796874183881341481}
-          m_TargetAssemblyTypeName: QuitButton, Assembly-CSharp
-          m_MethodName: OnQuitButtonClicked
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!114 &2796874183881341481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +175,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cebe44619fac6964dbbdb38d4534b3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  enterSe: {fileID: 8300000, guid: ce053a9ee3b317e4d8be4af6acdd168b, type: 3}
+  clickSe: {fileID: 8300000, guid: 9c4765016b1fce04bb941528117f2afa, type: 3}
+  muteEnterSE: 0
+  muteClickSE: 0
 --- !u!1 &5745836440840429431
 GameObject:
   m_ObjectHideFlags: 0
