@@ -7,34 +7,34 @@ public class WeaponData : ScriptableObject, IProduct
     [Serializable]
     public struct DamageMultiplier
     {
-        public PlayerStatus status;
-        [Range(0, 100)] public int rate;
+        public PlayerStatus status;         // 倍率がのるステータス
+        [Range(0, 100)] public int rate;    // ステータスの割合
     }
 
     [Header("基本情報のデータ")]
     public WeaponIdentityData identityData;
-    [SerializeField] private TierType weaponTier;
+    [SerializeField] private TierType weaponTier;   // 武器のティア
+    [SerializeField] private int weaponPrice;       // 武器の値段
 
     [Header("ステータス")]
-    [SerializeField] private float baseDamage;
-    public DamageMultiplier damageMultiplier;
-    [SerializeField, Range(-100, 100)] private float baseCriticalChance;
-    [SerializeField] private float baseCriticalDamageMultiplier;
-    [SerializeField] private float baseRange;
-    [SerializeField] private float baseCoolTime;
+    [SerializeField] private float baseDamage;      // 基本ダメージ
+    public DamageMultiplier damageMultiplier;       // ダメージ補正
+    [SerializeField, Range(-100, 100)] private float baseCriticalChance;    // 基本クリティカル率
+    [SerializeField] private float baseCriticalDamageMultiplier;            // 基本クリティカルダメージ
+    [SerializeField] private float baseRange;                               // 基本射程距離
+    [SerializeField] private float baseCoolTime;                            // 基本クールタイム
 
     [Header("武器パラメータ")]
-    public int bulletCnt;
-    public float bulletSpeed;
-    public Vector2 fireDirection;
-    [Range(0, 360)] public int spreadAngle;
-    [Range(0, 100)] public int dispersion;
-    public float cycleTime;
-    public bool isTargetting;
+    public int bulletCnt;                   // 発射する弾数
+    public float bulletSpeed;               // 弾速
+    public Vector2 fireDirection;           // 発射方向
+    [Range(0, 360)] public int spreadAngle; // 拡散角度
+    [Range(0, 100)] public int dispersion;  // 射撃エラー
+    public float cycleTime;                 // 射撃サイクルの時間
+    public bool isTargetting;               // 敵をねらって打つか
 
     [Header("弾丸パラメータ")]
-    public int penetrationCnt;
-    public int bounceCnt;
+    public int penetrationCnt;  // 貫通する敵の数
 
     /// <summary>
     /// 参照用プロパティ
@@ -53,7 +53,7 @@ public class WeaponData : ScriptableObject, IProduct
     public TierType Tier => weaponTier;
     public Sprite Icon => identityData.weaponIcon;
     public string Name => identityData.weaponName;
-    public int Price => identityData.weaponPrice;
+    public int Price => weaponPrice;
 
     public void PayProduct()
     {

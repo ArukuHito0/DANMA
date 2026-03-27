@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.Events;
 
 public abstract class EnemyBase : PooledObject
 {
@@ -17,6 +18,8 @@ public abstract class EnemyBase : PooledObject
     protected Rigidbody2D rb;
 
     private Coroutine attackCoroutine = null;
+
+    protected float beforeAttacktime = 0;
 
     protected override void OnSpawn()
     {
@@ -46,6 +49,11 @@ public abstract class EnemyBase : PooledObject
     {
         rb = GetComponent<Rigidbody2D>();
         healthComponent = GetComponent<HealthComponent>();
+    }
+
+    private void Start()
+    {
+        OnStart();
     }
 
     private void FixedUpdate()
@@ -79,6 +87,7 @@ public abstract class EnemyBase : PooledObject
 
     public void SpawnDefeatedEffect() => ObjectPoolManager.Instance.GetPooledObject(defeatedEffect, transform.position);
 
+    protected virtual void OnStart() { }
     protected abstract void Attack();
     protected abstract void Move();
 }

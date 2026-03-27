@@ -10,7 +10,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
     {
         get
         {
-            return (float)currentHealth / maxHealth;
+            return currentHealth / maxHealth;
         }
     }
 
@@ -59,7 +59,7 @@ public class HealthComponent : MonoBehaviour, IDamageable
 
     public void Heal(float amount)
     {
-        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        currentHealth = (int)Mathf.Clamp(currentHealth + amount, 0, maxHealth);
 
         OnHealthChanged?.Invoke(healthRate);
     }

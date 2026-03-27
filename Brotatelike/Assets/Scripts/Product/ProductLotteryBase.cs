@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using NUnit.Framework;
 
 public abstract class ProductLotteryBase<T> : ScriptableObject, IProductLottery
     where T : ScriptableObject, IProduct
@@ -82,24 +83,28 @@ public abstract class ProductLotteryBase<T> : ScriptableObject, IProductLottery
 
         var tierChances = GetTierChances();
 
-        float total = tierChances.Values.Sum();
-        float randomValue = UnityEngine.Random.Range(0, total);
+        // ティアの高い順に並び変える(Commonは除外)
+        var priorityTiers = tierChances.Keys.Where(t => t != TierType.Common).OrderByDescending(t => t).ToList();
 
-        float sum = 0;
-
-        foreach (var pair in tierChances)
+        foreach (var tier in priorityTiers)
         {
-            sum += pair.Value;
+            var config = tierChances.FirstOrDefault(c => c.Key == tier);
+            float succesChance = tierChances[tier];
 
-            if (randomValue > sum) continue;
-
-            // 抽選中のティアのキーが登録されていて、そのキーのリストが空でないか確認
-            if (dataDict.TryGetValue(pair.Key, out var list) && list.Any())
+            if (UnityEngine.Random.Range(0f, 100f) < succesChance)
             {
-                T product = list[UnityEngine.Random.Range(0, list.Count)];
-
-                return product;
+                // 抽選中のティアのキーが登録されていて、そのキーのリストが空でないか確認
+                if (dataDict.TryGetValue(tier, out var list) && list.Any())
+                {
+                    return list[UnityEngine.Random.Range(0, list.Count)];
+                }
             }
+        }
+
+        // 全て外れた場合、Commonを返す
+        if (dataDict.TryGetValue(TierType.Common, out var commonList) && commonList.Any())
+        {
+            return commonList[UnityEngine.Random.Range(0, commonList.Count)];
         }
 
         return null;

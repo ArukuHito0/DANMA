@@ -12444,10 +12444,7 @@ MonoBehaviour:
   waveDataList:
   - {fileID: 11400000, guid: 4d388e729d48ebe4b987c9b5f274a47e, type: 2}
   - {fileID: 11400000, guid: 0e682684e901b2c46bee45bf55232683, type: 2}
-  - {fileID: 11400000, guid: 0e682684e901b2c46bee45bf55232683, type: 2}
-  - {fileID: 11400000, guid: 0e682684e901b2c46bee45bf55232683, type: 2}
-  - {fileID: 11400000, guid: 0e682684e901b2c46bee45bf55232683, type: 2}
-  - {fileID: 11400000, guid: 0e682684e901b2c46bee45bf55232683, type: 2}
+  - {fileID: 11400000, guid: 4ce9c3e195333e744ba7b280a4a4ddf6, type: 2}
   fieldSize: {fileID: 1818769556}
   margin: 2
   waveCntText: {fileID: 1412775062}
