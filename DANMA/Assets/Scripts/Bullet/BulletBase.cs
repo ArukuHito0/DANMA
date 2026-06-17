@@ -38,7 +38,10 @@ public abstract class BulletBase : PooledObject
         if (collision.CompareTag(targetTag))
         {
             if (collision.gameObject != hitObj || hitObj == null)
+            {
                 hitCache = collision.GetComponent<IDamageable>();
+                hitObj = collision.gameObject;
+            }
 
             OnHit();
         }
