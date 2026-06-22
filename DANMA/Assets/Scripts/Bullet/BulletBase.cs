@@ -9,7 +9,6 @@ public abstract class BulletBase : PooledObject
 
     [SerializeField] protected string targetTag;
 
-    protected GameObject hitObj;
     protected IDamageable hitCache;
 
     protected abstract void OnHit();
@@ -37,13 +36,15 @@ public abstract class BulletBase : PooledObject
     {
         if (collision.CompareTag(targetTag))
         {
-            if (collision.gameObject != hitObj || hitObj == null)
+            if (TryGetComponent<IDamageable>(out IDamageable hit))
             {
-                hitCache = collision.GetComponent<IDamageable>();
-                hitObj = collision.gameObject;
-            }
+                if (hitCache != hit)
+                {
+                    hitCache = collision.GetComponent<IDamageable>();
+                }
 
-            OnHit();
+                OnHit();
+            }
         }
     }
 }
